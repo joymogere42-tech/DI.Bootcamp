@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To Do List</title>
+
+  <!-- Font Awesome for X icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 220px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .listTasks {
+      margin-top: 20px;
+    }
+
+    .task {
+      background: white;
+      width: 320px;
+      margin: 10px auto;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 6px;
+    }
+
+    .task.done span {
+      text-decoration: line-through;
+      color: red;
+    }
+
+    .delete {
+      cursor: pointer;
+      color: red;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📝 To Do List</h1>
+
+<form id="taskForm">
+  <input type="text" id="taskInput" placeholder="Enter a task">
+  <button type="submit">Submit</button>
+</form>
+
+<div class="listTasks"></div>
+
+<script>
+  // EMPTY ARRAY
+  const tasks = [];
+
+  let taskId = 0;
+
+  const form = document.getElementById("taskForm");
+  const input = document.getElementById("taskInput");
+  const list = document.querySelector(".listTasks");
+
+  // ADD TASK
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    addTask();
+  });
+
+  function addTask() {
+    const text = input.value.trim();
+
+    if (text === "") return;
+
+    // TASK OBJECT
+    const task = {
+      task_id: taskId++,
+      text: text,
+      done: false
+    };
+
+    tasks.push(task);
+
+    // CREATE HTML
+    const div = document.createElement("div");
+    div.classList.add("task");
+    div.setAttribute("data-task-id", task.task_id);
+
+    div.innerHTML = `
+      <input type="checkbox" class="check">
+      <span>${task.text}</span>
+      <i class="fa fa-times delete"></i>
+    `;
+
+    list.appendChild(div);
+    input.value = "";
+
+    // DONE TASK
+    div.querySelector(".check").addEventListener("change", function() {
+      doneTask(task.task_id, div);
+    });
+
+    // DELETE TASK
+    div.querySelector(".delete").addEventListener("click", function() {
+      deleteTask(task.task_id, div);
+    });
+  }
+
+  // MARK DONE
+  function doneTask(id, div) {
+    const task = tasks.find(t => t.task_id === id);
+    task.done = !task.done;
+    div.classList.toggle("done");
+  }
+
+  // DELETE TASK
+  function deleteTask(id, div) {
+    const index = tasks.findIndex(t => t.task_id === id);
+    tasks.splice(index, 1);
+    div.remove();
+  }
+</script>
+
+</body>
+</html>

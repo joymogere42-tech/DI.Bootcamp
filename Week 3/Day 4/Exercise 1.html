@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JS Exercises</title>
+</head>
+<body>
+
+<h2>Exercise Outputs</h2>
+
+<div id="fortune"></div>
+<div id="navbar"></div>
+<div id="juice"></div>
+
+<script>
+//  Exercise 1 : Scope
+
+// #1
+function funcOne() {
+    let a = 5;
+    if(a > 1) {
+        a = 3;
+    }
+    console.log("funcOne:", a); // 3
+}
+// Explanation: 'a' is changed inside the if block → final = 3
+
+funcOne();
+
+// #1.2
+// If const → ERROR because const cannot be reassigned
+
+
+//#2
+let a = 0;
+
+function funcTwo() {
+    a = 5;
+}
+
+function funcThree() {
+    console.log("funcThree:", a);
+}
+
+funcThree(); // 0
+funcTwo();
+funcThree(); // 5
+
+// #2.2
+// If const → ERROR when trying to reassign a
+
+
+//#3
+function funcFour() {
+    window.a = "hello";
+}
+
+function funcFive() {
+    console.log("funcFive:", a);
+}
+
+funcFour();
+funcFive(); // hello
+
+
+//#4
+let b = 1;
+function funcSix() {
+    let b = "test";
+    console.log("funcSix:", b); // test
+}
+funcSix();
+
+// #4.2
+// const works same (no reassignment)
+
+
+//#5
+let c = 2;
+if (true) {
+    let c = 5;
+    console.log("inside if:", c); // 5
+}
+console.log("outside if:", c); // 2
+
+// #5.2
+// const works same (block scope)
+
+
+// 🌟 Exercise 2 : Ternary
+
+const winBattle = () => true;
+
+let experiencePoints = winBattle() ? 10 : 1;
+
+console.log("XP:", experiencePoints); // 10
+
+
+//  Exercise 3 : Is it a string
+
+const isString = value => typeof value === "string";
+
+console.log(isString("hello")); // true
+console.log(isString([1,2,3])); // false
+
+
+//  Exercise 4 : Sum
+
+const sum = (a, b) => a + b;
+console.log("Sum:", sum(5, 3)); // 8
+
+
+//  Exercise 5 : Kg to grams
+
+// Function declaration
+function kgToGrams(kg) {
+    return kg * 1000;
+}
+console.log(kgToGrams(2));
+
+// Function expression
+const kgToGrams2 = function(kg) {
+    return kg * 1000;
+};
+console.log(kgToGrams2(3));
+
+// Difference:
+// Declaration is hoisted, expression is not
+
+// Arrow
+const kgToGrams3 = kg => kg * 1000;
+console.log(kgToGrams3(4));
+
+
+//  Exercise 6 : Fortune teller
+
+(function(children, partner, location, job) {
+    document.getElementById("fortune").textContent =
+    `You will be a ${job} in ${location}, and married to ${partner} with ${children} kids.`;
+})(2, "Alex", "Paris", "Developer");
+
+
+(function(name) {
+    const nav = document.getElementById("navbar");
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <p>Welcome ${JOY}</p>
+        <img src="https://www.shutterstock.com/image-photo/white-maltese-puppy-posing-photo-on-2481313225?irclickid=QIgzAK2fnxyZRBBQtfzt43omUku1TQT5JW0yTQ0&irgwc=1&afsrc=1&pl=38919-1636534&utm_medium=Affiliate&utm_campaign=Eezy%2C+LLC&utm_source=38919&utm_term=direct&utm_content=1636534&dd_referrer=https%3A%2F%2Fwww.vecteezy.com%2F" />
+    `;
+
+    nav.appendChild(div);
+})("John");
+
+
+//  Exercise 8 : Juice Bar
+
+function makeJuice(size) {
+
+    let ingredients = [];
+
+    function addIngredients(i1, i2, i3) {
+        ingredients.push(i1, i2, i3);
+    }
+
+    function displayJuice() {
+        document.getElementById("juice").textContent =
+        `The client wants a ${size} juice containing ${ingredients.join(", ")}`;
+    }
+
+    // call twice
+    addIngredients("apple", "banana", "mango");
+    addIngredients("orange", "pineapple", "kiwi");
+
+    displayJuice();
+}
+
+makeJuice("large");
+
+</script>
+
+</body>
+</html>

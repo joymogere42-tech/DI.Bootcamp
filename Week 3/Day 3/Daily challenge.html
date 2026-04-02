@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Mad Libs Game</title>
+</head>
+<body>
+
+<h1>Mad Libs</h1>
+
+<form id="libform">
+  <label for="noun">Noun:</label>
+  <input type="text" id="noun"><br>
+
+  <label for="adjective">Adjective:</label>
+  <input type="text" id="adjective"><br>
+
+  <label for="person">Someone's Name:</label>
+  <input type="text" id="person"><br>
+
+  <label for="verb">Verb:</label>
+  <input type="text" id="verb"><br>
+
+  <label for="place">A place:</label>
+  <input type="text" id="place"><br>
+
+  <button id="lib-button">Lib it!</button>
+</form>
+
+<!-- BONUS BUTTON -->
+<button id="shuffle-button">Shuffle Story</button>
+
+<p>
+  Generated story:
+  <span id="story"></span>
+</p>
+
+<script>
+const form = document.getElementById("libform");
+const storySpan = document.getElementById("story");
+const shuffleBtn = document.getElementById("shuffle-button");
+
+// store values globally for shuffle
+let values = {};
+let stories = [];
+
+// FORM SUBMIT
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const noun = document.getElementById("noun").value.trim();
+  const adjective = document.getElementById("adjective").value.trim();
+  const person = document.getElementById("person").value.trim();
+  const verb = document.getElementById("verb").value.trim();
+  const place = document.getElementById("place").value.trim();
+
+  // check empty
+  if (!noun || !adjective || !person || !verb || !place) {
+    alert("Please fill in all fields!");
+    return;
+  }
+
+  // store values
+  values = { noun, adjective, person, verb, place };
+
+  // create stories
+  createStories();
+
+  // display random story
+  displayRandomStory();
+});
+
+// CREATE STORIES
+function createStories() {
+  stories = [
+    `${values.person} went to ${values.place} with a ${values.adjective} ${values.noun} and started to ${values.verb}.`,
+    
+    `One day, a ${values.adjective} ${values.noun} met ${values.person} in ${values.place} and they decided to ${values.verb} together.`,
+    
+    `In ${values.place}, ${values.person} found a ${values.adjective} ${values.noun} that could ${values.verb}!`
+  ];
+}
+
+// DISPLAY RANDOM STORY
+function displayRandomStory() {
+  const randomIndex = Math.floor(Math.random() * stories.length);
+  storySpan.textContent = stories[randomIndex];
+}
+
+// SHUFFLE BUTTON
+shuffleBtn.addEventListener("click", function() {
+  if (stories.length === 0) {
+    alert("Generate a story first!");
+    return;
+  }
+  displayRandomStory();
+});
+</script>
+
+</body>
+</html>

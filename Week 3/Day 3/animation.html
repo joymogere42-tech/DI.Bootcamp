@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+        p {
+          background: yellow;
+          color: red;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <button id="clear">Clear Interval</button>
+    </body>
+    <script>
+        setTimeout(function () {
+  alert("Hello World");
+}, 2000);
+        setTimeout(function () {
+  let p = document.createElement("p");   // create <p>
+  p.innerText = "Hello World";           // add text
+
+  document.getElementById("container").appendChild(p); // add to div
+}, 2000);
+      intervalId = setInterval(function () {
+  count++;
+
+  let p = document.createElement("p");
+  p.innerText = "Hello World " + count;
+  container.appendChild(p);
+
+  // Stop when 5 paragraphs are added
+  if (count === 5) {
+    clearInterval(intervalId);
+  }
+}, 2000);
+
+// Clear button click
+clearBtn.addEventListener("click", function () {
+  clearInterval(intervalId);
+});
+    </script>
+    </html>
+    

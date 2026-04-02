@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Coloring Squares Game</title>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+    }
+
+    #palette {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .color, .tool {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      border: 2px solid black;
+    }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(20, 20px);
+      grid-template-rows: repeat(20, 20px);
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .cell {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      margin-left: 10px;
+      padding: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Coloring Squares Game</h1>
+
+<h3>Select a color or tool:</h3>
+
+<div id="palette">
+
+  <!-- COLORS -->
+  <div class="color" style="background:red"></div>
+  <div class="color" style="background:blue"></div>
+  <div class="color" style="background:green"></div>
+  <div class="color" style="background:yellow"></div>
+  <div class="color" style="background:black"></div>
+
+  <!-- TOOLS -->
+  <div class="tool" id="eraser" style="background:white">🧽</div>
+
+  <button id="clear">Clear</button>
+
+</div>
+
+<h3>Draw here:</h3>
+<div id="grid"></div>
+
+<script>
+
+//  state
+let selectedColor = "black";
+let isDrawing = false;
+
+//  color selection
+const colors = document.querySelectorAll(".color");
+
+colors.forEach(color => {
+  color.addEventListener("click", function() {
+    selectedColor = this.style.backgroundColor;
+  });
+});
+
+//  eraser tool
+document.getElementById("eraser").addEventListener("click", () => {
+  selectedColor = "white";
+});
+
+//  clear board
+document.getElementById("clear").addEventListener("click", () => {
+  cells.forEach(cell => {
+    cell.style.backgroundColor = "white";
+  });
+});
+
+//  create grid
+const grid = document.getElementById("grid");
+
+for (let i = 0; i < 400; i++) {
+  const cell = document.createElement("div");
+  cell.classList.add("cell");
+  grid.appendChild(cell);
+}
+
+//  drawing logic
+const cells = document.querySelectorAll(".cell");
+
+cells.forEach(cell => {
+
+  cell.addEventListener("mousedown", () => {
+    isDrawing = true;
+    cell.style.backgroundColor = selectedColor;
+  });
+
+  cell.addEventListener("mouseover", () => {
+    if (isDrawing) {
+      cell.style.backgroundColor = selectedColor;
+    }
+  });
+
+});
+
+// stop drawing
+document.body.addEventListener("mouseup", () => {
+  isDrawing = false;
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All Exercises</title>
+
+<style>
+/* BONUS fade effect */
+.fade {
+  opacity: 0;
+  transition: opacity 1s;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= EXERCISE 1 ================= -->
+<article>
+    <h1>Some Facts</h1>
+    <h2>The Chocolate</h2>
+    <h3>History of the chocolate</h3>
+
+    <p>Chocolate is made from tropical Theobroma cacao tree seeds.</p>
+    <p id="secondP">After the European discovery of the Americas, chocolate became very popular.</p>
+    <p>Chocolate has since become a popular food product.</p>
+    <p id="lastP">But what effect does eating chocolate have on our health?</p> 
+</article>
+
+<button id="boldBtn">Make paragraphs bold</button>
+
+<hr>
+
+<!-- ================= EXERCISE 2 ================= -->
+<form id="myForm">
+  <label>First name:</label>
+  <input type="text" id="fname" name="firstname">
+
+  <label>Last name:</label>
+  <input type="text" id="lname" name="lastname">
+
+  <input type="submit" value="Submit">
+</form>
+
+<ul class="usersAnswer"></ul>
+
+<hr>
+
+<!-- ================= EXERCISE 3 ================= -->
+<p id="sentence">
+<strong>Hello</strong> I hope you are enjoying <strong>this</strong> class. 
+At the <strong>end</strong> you <strong>will</strong> be great Developers!
+<strong>Enjoy</strong> the <strong>JavaScript</strong> lessons
+</p>
+
+<hr>
+
+<!-- ================= EXERCISE 4 ================= -->
+<p>Input radius value and get the volume of a sphere.</p>
+
+<form id="sphereForm">
+<label>Radius</label>
+<input type="text" id="radius" required>
+
+<label>Volume</label>
+<input type="text" id="volume">
+
+<input type="submit" value="Calculate">
+</form>
+
+<script>
+
+/* ================= EXERCISE 1 ================= */
+
+// Get h1 and log it
+let h1 = document.querySelector("h1");
+console.log(h1);
+
+// Remove last paragraph
+let article = document.querySelector("article");
+article.removeChild(article.lastElementChild);
+
+// h2 turns red when clicked
+let h2 = document.querySelector("h2");
+h2.addEventListener("click", () => {
+    h2.style.backgroundColor = "red";
+});
+
+// Hide h3 when clicked
+let h3 = document.querySelector("h3");
+h3.addEventListener("click", () => {
+    h3.style.display = "none";
+});
+
+// Make all paragraphs bold
+document.getElementById("boldBtn").addEventListener("click", () => {
+    let paragraphs = document.querySelectorAll("article p");
+    paragraphs.forEach(p => p.style.fontWeight = "bold");
+});
+
+// BONUS: random font size on hover
+h1.addEventListener("mouseover", () => {
+    let randomSize = Math.floor(Math.random() * 100);
+    h1.style.fontSize = randomSize + "px";
+});
+
+// BONUS: fade out 2nd paragraph
+let secondP = document.getElementById("secondP");
+secondP.addEventListener("mouseover", () => {
+    secondP.classList.add("fade");
+});
+
+
+/* ================= EXERCISE 2 ================= */
+
+// Get form
+let form = document.getElementById("myForm");
+console.log(form);
+
+// Get inputs by id
+let fname = document.getElementById("fname");
+let lname = document.getElementById("lname");
+console.log(fname, lname);
+
+// Get inputs by name
+let firstNameInput = document.getElementsByName("firstname")[0];
+let lastNameInput = document.getElementsByName("lastname")[0];
+console.log(firstNameInput, lastNameInput);
+
+// Submit event
+form.addEventListener("submit", function(event) {
+    event.preventDefault(); // prevents page reload
+
+    let first = fname.value;
+    let last = lname.value;
+
+    if (first === "" || last === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    let ul = document.querySelector(".usersAnswer");
+    ul.innerHTML = "";
+
+    let li1 = document.createElement("li");
+    li1.textContent = first;
+
+    let li2 = document.createElement("li");
+    li2.textContent = last;
+
+    ul.appendChild(li1);
+    ul.appendChild(li2);
+});
+
+
+/* ================= EXERCISE 3 ================= */
+
+let allBoldItems;
+
+function getBoldItems() {
+    allBoldItems = document.querySelectorAll("#sentence strong");
+}
+
+function highlight() {
+    allBoldItems.forEach(item => {
+        item.style.color = "blue";
+    });
+}
+
+function returnItemsToDefault() {
+    allBoldItems.forEach(item => {
+        item.style.color = "black";
+    });
+}
+
+// Call function to collect bold items
+getBoldItems();
+
+// Add events
+let sentence = document.getElementById("sentence");
+
+sentence.addEventListener("mouseover", highlight);
+sentence.addEventListener("mouseout", returnItemsToDefault);
+
+
+/* ================= EXERCISE 4 ================= */
+
+let sphereForm = document.getElementById("sphereForm");
+
+sphereForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let r = document.getElementById("radius").value;
+    let volume = (4/3) * Math.PI * Math.pow(r, 3);
+
+    document.getElementById("volume").value = volume.toFixed(2);
+});
+
+</script>
+
+</body>
+</html>

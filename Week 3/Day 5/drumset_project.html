@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drum Set</title>
+
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: #111;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .drum-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 50px;
+      gap: 15px;
+    }
+
+    .drum {
+      width: 100px;
+      height: 100px;
+      background: #333;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      border-radius: 10px;
+      transition: 0.15s;
+      user-select: none;
+    }
+
+    /* CLICK / ANIMATION EFFECT */
+    .drum.active {
+      transform: scale(0.9);
+      background: orange;
+      box-shadow: 0 0 20px orange;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1> Drum Set</h1>
+<p>Click or press keys: A S D F G H J</p>
+
+<div class="drum-container">
+
+  <div class="drum" data-key="a">A</div>
+  <div class="drum" data-key="s">S</div>
+  <div class="drum" data-key="d">D</div>
+  <div class="drum" data-key="f">F</div>
+  <div class="drum" data-key="g">G</div>
+  <div class="drum" data-key="h">H</div>
+  <div class="drum" data-key="j">J</div>
+
+</div>
+
+<script>
+
+// 🎧 PLAY SOUND FUNCTION
+function playSound(key) {
+  let audio;
+
+  switch (key) {
+    case "a":
+      audio = new Audio("sounds/kick.wav");
+      break;
+    case "s":
+      audio = new Audio("sounds/snare.wav");
+      break;
+    case "d":
+      audio = new Audio("sounds/hihat.wav");
+      break;
+    case "f":
+      audio = new Audio("sounds/tom1.wav");
+      break;
+    case "g":
+      audio = new Audio("sounds/tom2.wav");
+      break;
+    case "h":
+      audio = new Audio("sounds/tom3.wav");
+      break;
+    case "j":
+      audio = new Audio("sounds/crash.wav");
+      break;
+    default:
+      return;
+  }
+
+  audio.currentTime = 0;
+  audio.play();
+
+  // animation
+  const button = document.querySelector(`[data-key="${key}"]`);
+  if (button) {
+    button.classList.add("active");
+
+    setTimeout(() => {
+      button.classList.remove("active");
+    }, 150);
+  }
+}
+
+//  MOUSE CLICK EVENT
+const drums = document.querySelectorAll(".drum");
+
+drums.forEach(drum => {
+  drum.addEventListener("click", function () {
+    const key = this.getAttribute("data-key");
+    playSound(key);
+  });
+});
+
+// ⌨ KEYBOARD EVENT
+document.addEventListener("keydown", function (event) {
+  playSound(event.key.toLowerCase());
+});
+
+</script>
+
+</body>
+</html>
