@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form & JSON Exercises</title>
+</head>
+<body>
+
+  <h2>Exercise 1: GET Form</h2>
+  <!-- GET METHOD -->
+  <form method="GET" action="">
+    <label>Name:</label><br>
+    <input type="text" name="name"><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message"></textarea><br><br>
+
+    <input type="submit" value="Send (GET)">
+  </form>
+
+  <p><strong>Answer:</strong> Data appears in the URL (address bar).</p>
+
+  <hr>
+
+  <h2>Exercise 2: POST Form</h2>
+  <!-- POST METHOD -->
+  <form method="POST" action="">
+    <label>Name:</label><br>
+    <input type="text" name="name"><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message"></textarea><br><br>
+
+    <input type="submit" value="Send (POST)">
+  </form>
+
+  <p><strong>Answer:</strong> Data appears in the Network Tab (not in URL).</p>
+
+  <hr>
+
+  <h2>Exercise 3: JSON Mario</h2>
+
+  <pre id="output"></pre>
+
+  <script>
+    const marioGame = {
+      detail : "An amazing game!",
+      characters : {
+        mario : {
+          description:"Small and jumpy. Likes princesses.",
+          height: 10,
+          weight: 3,
+          speed: 12,
+        },
+        bowser : {
+          description: "Big and green, Hates princesses.",
+          height: 16,
+          weight: 6,
+          speed: 4,
+        },
+        princessPeach : {
+          description: "Beautiful princess.",
+          height: 12,
+          weight: 2,
+          speed: 2,
+        }
+      }
+    };
+
+    // Convert to JSON
+    const jsonData = JSON.stringify(marioGame);
+
+    // Pretty print JSON
+    const prettyJson = JSON.stringify(marioGame, null, 2);
+
+    // Display result on page
+    document.getElementById("output").textContent = prettyJson;
+
+    console.log("JSON:", jsonData);
+    console.log("Pretty JSON:", prettyJson);
+  </script>
+
+</body>
+</html>
