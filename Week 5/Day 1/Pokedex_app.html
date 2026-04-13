@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pokedex App</title>
+
+<style>
+  body {
+    font-family: Arial;
+    background: #c62828;
+    text-align: center;
+    color: white;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+
+  .pokedex {
+    background: #222;
+    width: 350px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  img {
+    width: 150px;
+  }
+
+  button {
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: yellow;
+    font-weight: bold;
+  }
+
+  .loading {
+    font-size: 18px;
+  }
+
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>🔥 Pokedex App</h1>
+
+<div class="pokedex">
+  <div id="screen">
+    <p>Click a button to load Pokémon</p>
+  </div>
+
+  <div>
+    <button id="prev">⬅ Prev</button>
+    <button id="random">🎲 Random</button>
+    <button id="next">Next ➡</button>
+  </div>
+</div>
+
+<script>
+let currentId = 1;
+
+// DOM
+const screen = document.getElementById("screen");
+const randomBtn = document.getElementById("random");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+
+// 🔹 Fetch Pokémon
+async function getPokemon(id) {
+  screen.innerHTML = `<p class="loading">⏳ Loading...</p>`;
+
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    
+    if (!res.ok) throw new Error("Not found");
+
+    const data = await res.json();
+
+    currentId = data.id;
+
+    screen.innerHTML = `
+      <h2>#${data.id} ${data.name.toUpperCase()}</h2>
+      <img src="${data.sprites.front_default}" />
+      <p><strong>Height:</strong> ${data.height}</p>
+      <p><strong>Weight:</strong> ${data.weight}</p>
+      <p><strong>Type:</strong> ${data.types.map(t => t.type.name).join(", ")}</p>
+    `;
+
+  } catch (error) {
+    screen.innerHTML = `
+      <p class="error">❌ Oh no! That Pokémon isn’t available…</p>
+    `;
+  }
+}
+
+// 🎲 Random Pokémon
+function randomPokemon() {
+  const randomId = Math.floor(Math.random() * 1000) + 1;
+  getPokemon(randomId);
+}
+
+// ⬅ Previous
+function prevPokemon() {
+  if (currentId > 1) {
+    getPokemon(currentId - 1);
+  }
+}
+
+// ➡ Next
+function nextPokemon() {
+  getPokemon(currentId + 1);
+}
+
+// Events
+randomBtn.addEventListener("click", randomPokemon);
+prevBtn.addEventListener("click", prevPokemon);
+nextBtn.addEventListener("click", nextPokemon);
+
+// Start
+getPokemon(1);
+</script>
+
+</body>
+</html>
