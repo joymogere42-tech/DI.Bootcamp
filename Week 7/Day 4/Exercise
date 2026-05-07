@@ -1,0 +1,102 @@
+// src/App.js
+import React from "react";
+import UserFavoriteAnimals from "./UserFavoriteAnimals";
+import Exercise from "./Exercise3";
+
+function App() {
+  // Exercise 1
+  const myelement = <h1>I Love JSX!</h1>;
+  const sum = 5 + 5;
+
+  // Exercise 2
+  const user = {
+    firstName: "Bob",
+    lastName: "Dylan",
+    favAnimals: ["Horse", "Turtle", "Elephant", "Monkey"],
+  };
+
+  return (
+    <div className="App">
+      {/* Exercise 1 */}
+      <p>Hello World!</p>
+      {myelement}
+      <p>React is {sum} times better with JSX</p>
+
+      {/* Exercise 2 */}
+      <h3>First Name: {user.firstName}</h3>
+      <h3>Last Name: {user.lastName}</h3>
+      <UserFavoriteAnimals favAnimals={user.favAnimals} />
+
+      {/* Exercise 3 */}
+      <Exercise />
+    </div>
+  );
+}
+
+export default App;
+
+
+//favorite animals exercise// src/UserFavoriteAnimals.js
+// src/UserFavoriteAnimals.js
+import React from "react";
+
+class UserFavoriteAnimals extends React.Component {
+  render() {
+    return (
+      <ul>
+        {this.props.favAnimals.map((animal, index) => (
+          <li key={index}>{animal}</li>
+        ))}
+      </ul>
+    );
+  }
+}
+
+export default UserFavoriteAnimals;
+
+
+// Exercise 3// src/Exercise3.js
+// src/Exercise3.js
+import React from "react";
+import "./Exercise.css";
+
+class Exercise extends React.Component {
+  render() {
+    const style_header = {
+      color: "white",
+      backgroundColor: "DodgerBlue",
+      padding: "10px",
+      fontFamily: "Arial",
+    };
+
+    return (
+      <div>
+        {/* Part I & II */}
+        <h1 style={style_header}>Styled Header</h1>
+        <p className="para">
+          Styled paragraph with external CSS file.
+        </p>
+        <a href="https://react.dev">Learn React</a>
+        <form>
+          <input type="text" placeholder="Enter text" />
+          <button type="submit">Submit</button>
+        </form>
+        <img
+          src="https://picsum.photos/200"
+          alt="Random"
+          style={{ width: "200px" }}
+        />
+        <ul>
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default Exercise;
+
+
+//
