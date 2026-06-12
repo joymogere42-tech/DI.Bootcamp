@@ -1,0 +1,9 @@
+{
+  "name": "collab-story-app",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend",
+    "types"
+  ]
+}
